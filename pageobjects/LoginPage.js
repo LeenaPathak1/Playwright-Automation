@@ -1,21 +1,34 @@
+
+const {PageUtils} = require('../utils/PageUtils');
 class LoginPage{
 
 constructor(page){
     this.page = page;
-    this.username = page.locator("input[data-qa='login-email']");
-    this.password = page.getByPlaceholder('Password');
-    this.loginButton = page.getByRole('button', {name: 'Login'});
+    this.loginPage = new PageUtils(page);
+
+}
+
+ getUsermameLocator() {
+    return this.page.locator("input[data-qa='login-email']");
+}
+
+ getPasswordLocator() {
+    return this.page.getByPlaceholder('Password');
+}
+
+ getLoginButtonLocator() {
+    return this.page.getByRole('button', {name: 'Login'});
 }
 
 async gotoLoginPage(url) {
-    await this.page.goto(url);
+   await this.loginPage.navigateToURL(url);
 }
 
 async validLogin(username, password){
-
-    await this.username.fill(username);
-    await this.password.fill(password);  
-    await this.loginButton.click();
+  
+    await this.loginPage.fillInput( this.getUsermameLocator(), username);
+    await this.loginPage.fillInput( this.getPasswordLocator(), password);
+    await this.loginPage.clickElement( this.getLoginButtonLocator());
 }
 }
 

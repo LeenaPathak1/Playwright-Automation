@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
+import { trace } from 'console';
 
 /**
  * Read environment variables from file.
@@ -14,19 +15,39 @@ import { defineConfig, devices } from '@playwright/test';
  */
  const config = ({
   testDir: './tests',
-  timeout: 40*1000,
+  retries: 0,
+  timeout: 30*1000,
+  workers: 1,
   expect: {
-    timeout: 40*1000
+    timeout: 30*1000
   },
   reporter: 'html',
 
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+
+  projects: [
+    {
+  name:'chrome' ,  
   use: {
     browserName: 'chromium',
     headless: false,
+    screenshot: 'on',
+    trace: 'on',
  
   },
+},
+{
+  name:'firefox' ,  
+  use: {
+    browserName: 'firefox',
+    headless: false,
+    screenshot: 'on',
+    trace: 'on',
+ 
+  },
+}
 
+  ]
   
 });
 module.exports = config;

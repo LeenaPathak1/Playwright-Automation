@@ -5,13 +5,13 @@ import { request } from '@playwright/test';
 test('API Test', async () => {
   const apiContext = await request.newContext();
   const payload = {
-    email: 'autopractice2025@yopmail.com',
-    password: 'home_study2025'
+    userEmail: 'playwright.test@yopmail.com',
+    userPassword: 'Learning2025'
   };
 
     
   // Make a GET request to the API endpoint
-  const response = await apiContext.post('https://automationexercise.com/api/verifyLogin',
+  const response = await apiContext.post('https://rahulshettyacademy.com/api/ecom/auth/login',
         {
           data: payload
           ,
@@ -23,12 +23,12 @@ test('API Test', async () => {
   
   
   // Check if the response status is OK
-  expect(response.status()).toBe(200);
+  expect(response.ok()).toBeTruthy();
   
   // Parse the JSON response
   const parsedresponse = await response.json();
   
   // Validate the response content
-  console.log(parsedresponse.message);
+  console.log(parsedresponse.token);
   
 });
